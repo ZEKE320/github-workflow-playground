@@ -1,6 +1,6 @@
 // @ts-check
 /** @param {import("github-script").AsyncFunctionArguments} AsyncFunctionArguments  */
-const autoChangePrBase = async ({ context, github }) => {
+module.exports = async ({ context, github }) => {
   const pullRequest = context.payload.pull_request;
   const pull_number = pullRequest?.number;
   const headBranch = pullRequest?.head.ref;
@@ -24,5 +24,3 @@ const autoChangePrBase = async ({ context, github }) => {
 
   console.log("Base branch changed to 'develop'");
 };
-
-export default autoChangePrBase;

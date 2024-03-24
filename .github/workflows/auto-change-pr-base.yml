@@ -24,8 +24,8 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { default: autoChangePrBase} = await import('${{github.workspace}}/.github/workflows/auto-change-pr-base.js')
-            await autoChangePrBase()
+            const { default: autoChangePrBase } = await require('${{ github.workspace }}/.github/workflows/auto-change-pr-base.js')
+            await autoChangePrBase({context, github})
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       # - uses: actions/checkout@v3
