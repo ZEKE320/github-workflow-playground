@@ -24,8 +24,6 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const context = github.context;
-
             if (context.payload.pull_request.base.ref === 'develop' || context.payload.pull_request.base.ref === 'hotfix') {
               console.log("No change needed.");
               return;
