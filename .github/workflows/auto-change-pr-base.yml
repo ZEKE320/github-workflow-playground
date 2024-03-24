@@ -24,7 +24,6 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const github = require('@actions/github');
             const context = github.context;
 
             if (context.payload.pull_request.base.ref === 'develop' || context.payload.pull_request.base.ref === 'hotfix') {
@@ -37,9 +36,9 @@ jobs:
             const pull_number = context.payload.pull_request.number;
 
             await github.rest.pulls.update({
-              owner, 
-              repo, 
-              pull_number, 
+              owner,
+              repo,
+              pull_number,
               base: 'develop'
             });
 
