@@ -25,7 +25,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const script = require("${{github.workspace}}/.github/workflows/auto-change-pr-base.js");
+            const script = require("./.github/workflows/auto-change-pr-base.js");
             script({ context, github });
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
