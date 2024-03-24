@@ -11,7 +11,7 @@ module.exports = async ({ context, github }) => {
     baseBranch !== "main" ||
     ["develop", "hotfix"].includes(headBranch)
   ) {
-    console.log("No change needed for the base branch");
+    console.log("No changes needed for the base branch");
     return;
   }
 
@@ -22,5 +22,5 @@ module.exports = async ({ context, github }) => {
     base: "develop", // Change the base branch to 'develop'.
   });
 
-  console.log("Base branch changed to 'develop'");
+  console.log("The base branch has been changed to 'develop'");
 };
