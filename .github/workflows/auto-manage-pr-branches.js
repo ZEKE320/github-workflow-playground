@@ -29,11 +29,14 @@ function validateHeadBranchOrThrow(context) {
     allowedHeadBranchForDevelopment.test(headBranch);
 
   if (isAllowedHeadBranchForDevelopment) {
-    throw new Error(
-      `The head branch '${headBranch}' is not an allowed head branch for development.` +
-        ` Please create a PR with a head branch that starts with the 'preview/' prefix.`
-    );
+    console.log("The head branch is valid. Continue the workflow.");
+    return;
   }
+
+  throw new Error(
+    `The head branch '${headBranch}' is not an allowed head branch for development.` +
+      ` Please create a PR with a head branch that starts with the 'preview/' prefix.`
+  );
 }
 
 /**
