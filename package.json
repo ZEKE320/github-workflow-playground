@@ -1,0 +1,7 @@
+{
+  "name": "github-workflow-playground",
+  "private": true,
+  "devDependencies": {
+    "@types/github-script": "github:actions/github-script"
+  }
+}
