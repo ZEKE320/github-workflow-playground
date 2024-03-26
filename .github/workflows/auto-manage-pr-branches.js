@@ -1,8 +1,5 @@
 // @ts-check
 
-const { Context } = require("@actions/github/lib/context");
-const { GitHub } = require("@actions/github/lib/utils");
-
 const dangerousBaseBranches = ["main", "hotfix"];
 const trustedHeadBranches = ["main", "hotfix", "develop"];
 const allowedHeadBranchForDevelopment = /^preview\/*/;
@@ -18,7 +15,7 @@ module.exports = async ({ context, github }) => {
 
 /**
  * PRのヘッドブランチを検証します。
- * @param {Context} context
+ * @param {import("@actions/github/lib/context").Context} context
  */
 function validateHeadBranchOrThrow(context) {
   const pullRequest = context.payload.pull_request;
@@ -41,8 +38,8 @@ function validateHeadBranchOrThrow(context) {
 
 /**
  * PRのベースブランチを検証し、必要に応じて修正します。
- * @param {Context} context
- * @param {InstanceType<typeof GitHub>} github
+ * @param {import("@actions/github/lib/context").Context} context
+ * @param {import("@octokit/plugin-rest-endpoint-methods/dist-types/types").Api} github
  */
 const validateAndFixBaseBranch = async (context, github) => {
   const pullRequest = context.payload.pull_request;
