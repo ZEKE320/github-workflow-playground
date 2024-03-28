@@ -2,39 +2,15 @@
 
 const dangerousBaseBranches = ["main", "hotfix"];
 const trustedHeadBranches = ["main", "hotfix", "develop"];
-const allowedHeadBranchForDevelopment = /^preview\/*/;
 
 /**
  * PRブランチの検証を行います。
  * @param {import("github-script").AsyncFunctionArguments} AsyncFunctionArguments
  */
 module.exports = async ({ context, github }) => {
-  validateHeadBranchOrThrow(context);
   await validateAndFixBaseBranch(context, github);
+  validateHeadBranchOrThrow(context);
 };
-
-/**
- * PRのヘッドブランチを検証します。
- * @param {import("@actions/github/lib/context").Context} context
- */
-function validateHeadBranchOrThrow(context) {
-  const pullRequest = context.payload.pull_request;
-  const headBranch = pullRequest?.head.ref;
-
-  if (headBranch == undefined) {
-    throw new Error("The PR is not valid.");
-  }
-
-  const isAllowedHeadBranchForDevelopment =
-    allowedHeadBranchForDevelopment.test(headBranch);
-
-  if (isAllowedHeadBranchForDevelopment) {
-    throw new Error(
-      `The head branch '${headBranch}' is not an allowed head branch for development.` +
-        ` Please create a PR with a head branch that starts with the 'preview/' prefix.`
-    );
-  }
-}
 
 /**
  * PRのベースブランチを検証し、必要に応じて修正します。
@@ -73,3 +49,32 @@ const validateAndFixBaseBranch = async (context, github) => {
 
   console.log("The base branch has been updated to 'develop'");
 };
+
+/**
+ * PRのヘッドブランチを検証します。
+ * @param {import("@actions/github/lib/context").Context} context
+ */
+function validateHeadBranchOrThrow(context) {
+  const pullRequest = context.payload.pull_request;
+
+  /**
+   * @type {string | undefined}
+   */
+  const headBranch = pullRequest?.head.ref;
+
+  if (headBranch == undefined) {
+    throw new Error("The PR is not valid.");
+  }
+
+  const isPreviewBranch = headBranch.startsWith("preview/");
+
+  if (isPreviewBranch) {
+    console.log("No changes are required to the head branch.");
+    return;
+  }
+
+  throw new Error(
+    `The head branch '${headBranch}' is not an allowed.` +
+      ` Please create a new PR with a head branch that starts with the 'preview/' prefix.`
+  );
+}
